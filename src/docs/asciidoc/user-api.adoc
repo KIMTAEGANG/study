@@ -1,0 +1,19 @@
+ifndef::snippets[]
+:snippets: build/generated-snippets
+endif::[]
+
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+==== 회원가입
+===== 요청
+include::{snippets}/user-api-controller-test/register/http-request.adoc[]
+
+===== 응답
+include::{snippets}/user-api-controller-test/register/http-response.adoc[]
+
+
