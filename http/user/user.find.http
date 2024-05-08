@@ -1,0 +1,2 @@
+### 사용자 조회
+GET {{domain}}/api/v1/user/test1
