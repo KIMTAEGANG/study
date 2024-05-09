@@ -16,4 +16,24 @@ include::{snippets}/user-api-controller-test/register/http-request.adoc[]
 ===== 응답
 include::{snippets}/user-api-controller-test/register/http-response.adoc[]
 
+---
 
+==== 회원 정보 조회
+===== 요청
+include::{snippets}/user-api-controller-test/find-user-info/http-request.adoc[]
+include::{snippets}/user-api-controller-test/find-user-info/query-parameters.adoc[]
+
+===== 응답
+include::{snippets}/user-api-controller-test/find-user-info/http-response.adoc[]
+include::{snippets}/user-api-controller-test/find-user-info/response-fields.adoc[]
+
+---
+
+==== 아이디 찾기
+===== 요청
+include::{snippets}/user-api-controller-test/find-id/http-request.adoc[]
+include::{snippets}/user-api-controller-test/find-id/query-parameters.adoc[]
+
+===== 응답
+include::{snippets}/user-api-controller-test/find-id/http-response.adoc[]
+include::{snippets}/user-api-controller-test/find-id/response-fields.adoc[]

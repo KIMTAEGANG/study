@@ -1,2 +1,8 @@
 ### 사용자 조회
-GET {{domain}}/api/v1/user/test1
+GET {{domain}}/api/v1/user/find
+    ?userId=test1
+
+
+### 아이디 찾기
+GET {{domain}}/api/v1/user/findId
+    ?email=test13@naver.com
