@@ -7,4 +7,6 @@ import java.util.List;
 public interface UserFindPort {
     UserDomain findByUserId(String userId);
     List<UserDomain> findUserId(String email);
+    boolean existsByUserId(String userId);
+    UserDomain findByRefreshToken(String refreshToken);
 }

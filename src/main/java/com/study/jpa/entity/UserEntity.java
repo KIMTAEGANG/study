@@ -2,6 +2,9 @@ package com.study.jpa.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -11,7 +14,12 @@ import lombok.*;
 @Table(name = "user")
 public class UserEntity {
     @Id
-    @Column private String userId;
-    @Column private String userName;
-    @Column private String email;
+    @Column(name = "userId", length = 20) private String userId;
+    @Column(name = "password", length = 20) private String password;
+    @Column(name = "userName", length = 10) private String userName;
+    @Column(name = "email", length = 30) private String email;
+    @Column(name = "refreshToken", length = 1000) private String refreshToken;
+    @Column(name = "createDate") private LocalDateTime createDate;
+    @Column(name = "modifyDate", nullable = false) private LocalDateTime modifyDate;
+
 }
