@@ -1,6 +1,6 @@
 package com.study.module.user.application.port.input;
 
-public interface JwtRemoveUseCase {
+public interface UserRemoveUseCase {
     void destroyRefreshToken(String userId);
 
 }

@@ -99,7 +99,7 @@ public class UserApiControllerTest extends RestDocumentConfig {
         //given
         List<String> response = List.of("test13");
 
-        given(userFindQuery.findUserId("test13@naver.com")).willReturn(response);
+        given(userFindQuery.findUserIdByEmail("test13@naver.com")).willReturn(response);
 
         //when
         ResultActions actions = mockMvc.perform(

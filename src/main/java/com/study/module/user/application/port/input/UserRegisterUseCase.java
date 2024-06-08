@@ -1,6 +1,6 @@
 package com.study.module.user.application.port.input;
 
-public interface JwtRegisterUseCase {
+public interface UserRegisterUseCase {
     String createAccessToken(String userId);
     String createRefreshToken();
 }

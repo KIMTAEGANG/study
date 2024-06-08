@@ -2,6 +2,7 @@ package com.study.module.user.adapter.input;
 
 
 import com.study.module.user.application.port.input.UserFindQuery;
+import com.study.module.user.domain.ExternalUserDomain;
 import com.study.module.user.domain.UserDomain;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -25,13 +26,13 @@ public class UserApiController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<UserDomain> findOne(@RequestParam String userId) {
+    public ResponseEntity<ExternalUserDomain> findOne(@RequestParam String userId) {
         return ResponseEntity.ok(userFindQuery.findOne(userId));
     }
 
     @GetMapping("/findId")
     public ResponseEntity<List<String>> findUserId(@RequestParam String email) {
-        return ResponseEntity.ok(userFindQuery.findUserId(email));
+        return ResponseEntity.ok(userFindQuery.findUserIdByEmail(email));
     }
 
 }
