@@ -6,7 +6,6 @@ import com.study.module.user.application.port.input.JwtRegisterUseCase;
 import com.study.module.user.application.port.input.JwtRemoveUseCase;
 import com.study.module.user.application.port.output.JwtModifyPort;
 import com.study.module.user.application.port.output.JwtRegisterPort;
-import io.jsonwebtoken.Jwts;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,10 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -49,7 +45,7 @@ public class JwtService implements JwtRegisterUseCase, JwtRemoveUseCase {
 
     @Override
     public String createAccessToken(String userId) {
-        Date date = Date.from(LocalDateTime.now().plus(accessTokenExpire, ChronoUnit.SECONDS).atZone(ZoneId.systemDefault()).toInstant());
+        Date date = Date.from(LocalDateTime.now().plusSeconds(accessTokenExpire).atZone(ZoneId.systemDefault()).toInstant());
         return JWT.create()
                 .withSubject(ACCESS_TOKEN_SUBJECT)
                 .withExpiresAt(date)
@@ -59,17 +55,17 @@ public class JwtService implements JwtRegisterUseCase, JwtRemoveUseCase {
 
     @Override
     public String createRefreshToken() {
-        Date date = Date.from(LocalDateTime.now().plus(refreshTokenExpire, ChronoUnit.SECONDS).atZone(ZoneId.systemDefault()).toInstant());
+        Date date = Date.from(LocalDateTime.now().plusSeconds(refreshTokenExpire).atZone(ZoneId.systemDefault()).toInstant());
         return JWT.create()
                 .withSubject(REFRESH_TOKEN_SUBJECT)
                 .withExpiresAt(date)
                 .sign(Algorithm.HMAC512(secretKey));
     }
 
-//    @Override
-//    public void destroyRefreshToken(String userId) {
+    @Override
+    public void destroyRefreshToken(String userId) {
 //        userModifyPort.findById(userId)
-//    }
+    }
 //
 //    @Override
 //    public void updateRefreshToken(String userId, String refreshToken) {
