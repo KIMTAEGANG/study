@@ -20,10 +20,11 @@ public interface UserMapper {
             c.getModifyDate()
     );
 
-    Function<List<UserEntity>, List<ExternalUserDomain>> toDomainList = (c) -> c.stream()
+    Function<List<UserEntity>, List<UserDomain>> toDomainList = (c) -> c.stream()
             .map(
-                    d -> new ExternalUserDomain(
+                    d -> new UserDomain(
                             d.getUserId(),
+                            d.getPassword(),
                             d.getUserName(),
                             d.getEmail(),
                             d.getRefreshToken(),

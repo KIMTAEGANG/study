@@ -4,6 +4,7 @@ package com.study.module;
 import com.study.RestDocumentConfig;
 import com.study.module.user.adapter.input.UserApiController;
 import com.study.module.user.application.port.input.UserFindQuery;
+import com.study.module.user.domain.ExternalUserDomain;
 import com.study.module.user.domain.UserDomain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
@@ -60,10 +62,13 @@ public class UserApiControllerTest extends RestDocumentConfig {
     @Test
     @DisplayName("회원 정보 조회")
     void findUserInfo() throws Exception {
-        UserDomain response = new UserDomain(
+        ExternalUserDomain response = new ExternalUserDomain(
                 "test13",
                 "test13",
-                "test13@naver.com"
+                "test13@naver.com",
+                "refreshToken",
+                LocalDateTime.now(),
+                null
         );
 
         //given
@@ -87,7 +92,10 @@ public class UserApiControllerTest extends RestDocumentConfig {
                         responseFields(
                                 fieldWithPath("userId").description("사용자 아이디"),
                                 fieldWithPath("userName").description("사용자 이름"),
-                                fieldWithPath("email").description("이메일")
+                                fieldWithPath("email").description("이메일"),
+                                fieldWithPath("refreshToken").description("refreshToken 값"),
+                                fieldWithPath("createDate").description("생성일자"),
+                                fieldWithPath("modifyDate").description("수정일자")
                         )
                 )
         ).andExpect(status().isOk());

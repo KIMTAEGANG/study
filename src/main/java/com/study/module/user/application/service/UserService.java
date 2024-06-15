@@ -66,8 +66,8 @@ public class UserService implements UserFindQuery, UserRegisterUseCase, UserRemo
     }
 
     @Override
-    public List<String> findUserId(String email) {
-        List<UserDomain> userDomainList = userFindPort.findUserId(email);
+    public List<String> findUserIdByEmail(String email) {
+        List<UserDomain> userDomainList = userFindPort.findUserIdByEmail(email);
         if(CollectionUtils.isEmpty(userDomainList)) {
             throw new NotExistUser();
         }

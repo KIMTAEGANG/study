@@ -26,7 +26,7 @@ public class UserPersistenceAdapter implements UserFindPort, UserRegisterPort, U
     }
 
     @Override
-    public List<ExternalUserDomain> findUserIdByEmail(String userId) {
+    public List<UserDomain> findUserIdByEmail(String userId) {
         List<UserEntity> list = userRepository.findUserIdByEmail(userId);
         if(CollectionUtils.isEmpty(list)) {
             return Collections.emptyList();
