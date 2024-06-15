@@ -3,6 +3,7 @@ package com.study.module.user.application.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.study.common.exception.NotFoundUserException;
+import com.study.common.handler.exception.NotExistUser;
 import com.study.module.user.application.port.input.UserFindQuery;
 import com.study.module.user.application.port.input.UserModifyUseCase;
 import com.study.module.user.application.port.input.UserRegisterUseCase;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -57,18 +59,20 @@ public class UserService implements UserFindQuery, UserRegisterUseCase, UserRemo
     @Override
     public ExternalUserDomain findOne(String userId) {
         UserDomain userDomain = userFindPort.findByUserId(userId);
+        if(userDomain == null) {
+            throw new NotExistUser();
+        }
         return ExternalUserDomain.of(userDomain);
     }
 
     @Override
-    public List<String> findUserIdByEmail(String email) {
-        List<String> userId = null;
-        try {
-            userId = userFindPort.findUserIdByEmail(email).stream().map(ExternalUserDomain::userId).toList();
-        } catch (Exception e) {
-            log.error(e.getMessage());
+    public List<String> findUserId(String email) {
+        List<UserDomain> userDomainList = userFindPort.findUserId(email);
+        if(CollectionUtils.isEmpty(userDomainList)) {
+            throw new NotExistUser();
         }
-        return userId;
+
+        return userDomainList.stream().map(UserDomain::userId).toList();
     }
 
     @Override
