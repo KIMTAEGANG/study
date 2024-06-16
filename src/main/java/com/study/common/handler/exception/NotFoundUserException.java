@@ -1,4 +1,6 @@
-package com.study.common.exception;
+package com.study.common.handler.exception;
+
+
 public class NotFoundUserException extends ClientException {
     public NotFoundUserException(){super();};
 
