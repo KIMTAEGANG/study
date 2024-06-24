@@ -1,5 +1,6 @@
 package com.study.module.user.application.port.input;
 
+import com.study.module.user.domain.UserDomain;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Optional;

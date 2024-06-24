@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class JwtService implements JwtFindQuery, JwtModifyUseCase, JwtRegisterUseCase, JwtRemoveUseCase {
+public class JwtService implements JwtFindQuery, JwtModifyUseCase, JwtRegisterUseCase, JwtRemoveUseCase, JwtSendUseCase {
 
     @Value("${spring.jwt.secret}")
     private String secretKey;

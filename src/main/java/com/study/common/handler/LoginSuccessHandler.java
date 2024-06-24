@@ -3,6 +3,8 @@ package com.study.common.handler;
 import com.study.module.user.application.port.input.JwtModifyUseCase;
 import com.study.module.user.application.port.input.JwtRegisterUseCase;
 import com.study.module.user.application.port.input.UserFindQuery;
+import com.study.module.user.application.service.JwtService;
+import com.study.module.user.application.service.UserService;
 import com.study.module.user.domain.ExternalUserDomain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,19 +17,20 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-    private final JwtRegisterUseCase jwtRegisterUseCase;
-    private final JwtModifyUseCase jwtModifyUseCase;
-    private final UserFindQuery userFindQuery;
+    private final JwtService jwtService;
+    private final UserService userService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         String userId = extractUserId(authentication);
-        String accessToken = jwtRegisterUseCase.createAccessToken(userId);
-        String refreshToken = jwtRegisterUseCase.createRefreshToken();
-        jwtRegisterUseCase.sendAccessTokenAndRefreshToken(response, accessToken, refreshToken);
+        String accessToken = jwtService.createAccessToken(userId);
+        String refreshToken = jwtService.createRefreshToken();
+        jwtService.sendAccessTokenAndRefreshToken(response, accessToken, refreshToken);
 
-        ExternalUserDomain externalUserDomain = userFindQuery.findOne(userId);
-        jwtModifyUseCase.updateRefreshToken(userId, refreshToken);
+        ExternalUserDomain externalUserDomain = userService.findOne(userId);
+        if(externalUserDomain != null) {
+            jwtService.updateRefreshToken(userId, refreshToken);
+        }
 
         response.getWriter().write("success");
     }

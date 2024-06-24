@@ -15,6 +15,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -41,7 +42,8 @@ public class UserPersistenceAdapter implements UserFindPort, UserRegisterPort, U
 
     @Override
     public UserDomain findByRefreshToken(String refreshToken) {
-        return null;
+        Optional<UserEntity> userEntity = userRepository.findByRefreshToken(refreshToken);
+        return userEntity.map(UserMapper.toDomain).orElse(null);
     }
 
     @Override
