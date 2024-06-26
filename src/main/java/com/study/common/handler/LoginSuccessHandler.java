@@ -17,22 +17,24 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-    private final JwtService jwtService;
+//    private final JwtService jwtService;
     private final UserService userService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         String userId = extractUserId(authentication);
-        String accessToken = jwtService.createAccessToken(userId);
-        String refreshToken = jwtService.createRefreshToken();
-        jwtService.sendAccessTokenAndRefreshToken(response, accessToken, refreshToken);
+//        String accessToken = jwtService.createAccessToken(userId);
+//        String refreshToken = jwtService.createRefreshToken();
+//        jwtService.sendAccessTokenAndRefreshToken(response, accessToken, refreshToken);
 
-        ExternalUserDomain externalUserDomain = userService.findOne(userId);
-        if(externalUserDomain != null) {
-            jwtService.updateRefreshToken(userId, refreshToken);
+        UserDetails userDetails = userService.loadUserByUsername(userId);
+        if(userDetails != null && request.getParameter("password").equals(userDetails.getPassword())) {
+            response.sendRedirect("/");
         }
-
-        response.getWriter().write("success");
+//        if(externalUserDomain != null) {
+//            jwtService.updateRefreshToken(userId, refreshToken);
+//        }
+        response.sendRedirect("/");
     }
 
     private String extractUserId(Authentication authentication) {

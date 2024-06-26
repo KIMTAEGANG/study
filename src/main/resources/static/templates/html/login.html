@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <style>
+        div.wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90dvh;
+        }
+    </style>
+
+</head>
+<body>
+<div class="wrapper">
+    <form action="/login" method="post">
+        <div>
+            <fieldset>
+                <legend>회원로그인</legend>
+                <label  title="아이디"><input id="member_id" name="userId" placeholder="아이디" value="" type="text"></label>
+                <label  title="비밀번호"><input id="member_passwd" name="password" autocomplete="off" value="" type="password" placeholder="비밀번호"></label>
+                <button type="submit">로그인</button>
+                <!--<ul>
+                    <li><a href="">아이디찾기</a></li>
+                    <li><a href="">비밀번호찾기</a></li>
+                    <li><a href="">회원가입</a></li>
+                </ul>-->
+            </fieldset>
+        </div>
+    </form>
+</div>
+</body>
+<script>
+    let button = document.querySelector('button');
+    button.addEventListener('click', () => {
+        location.href = "/login/confirm";
+    })
+</script>
+</html>

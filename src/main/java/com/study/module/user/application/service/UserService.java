@@ -55,7 +55,7 @@ public class UserService implements UserFindQuery, UserRegisterUseCase, UserRemo
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
         UserDomain userDomain = userFindPort.findByUserId(userId);
         if(userDomain == null) {
-            throw new NotExistUser();
+            return null;
         }
         return new UserDetailsImpl(userDomain);
     }
