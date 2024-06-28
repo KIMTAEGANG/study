@@ -5,6 +5,7 @@ import com.study.module.user.application.port.input.UserFindQuery;
 import com.study.module.user.application.port.input.UserModifyUseCase;
 import com.study.module.user.application.port.input.UserRegisterUseCase;
 import com.study.module.user.application.port.input.UserRemoveUseCase;
+import com.study.module.user.application.port.input.command.UserRegisterCommand;
 import com.study.module.user.application.port.output.UserModifyPort;
 import com.study.module.user.application.port.output.UserRegisterPort;
 import com.study.module.user.application.port.output.UserFindPort;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -25,12 +27,12 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class UserService implements UserFindQuery, UserRegisterUseCase, UserRemoveUseCase, UserModifyUseCase, UserDetailsService {
+public class UserService implements UserFindQuery, UserRegisterUseCase, UserRemoveUseCase, UserModifyUseCase {
     private final UserRegisterPort userRegisterPort;
     private final UserModifyPort userModifyPort;
-
     private final UserFindPort userFindPort;
     private final UserRemovePort userRemovePort;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public ExternalUserDomain findOne(String userId) {
@@ -52,11 +54,8 @@ public class UserService implements UserFindQuery, UserRegisterUseCase, UserRemo
     }
 
     @Override
-    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        UserDomain userDomain = userFindPort.findByUserId(userId);
-        if(userDomain == null) {
-            return null;
-        }
-        return new UserDetailsImpl(userDomain);
+    public void save(UserRegisterCommand command) {
+        String encodePassword = passwordEncoder.encode(command.password());
+        userRegisterPort.save(UserDomain.of(command, encodePassword));
     }
 }

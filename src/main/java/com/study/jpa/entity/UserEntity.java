@@ -15,10 +15,9 @@ import java.time.LocalDateTime;
 public class UserEntity {
     @Id
     @Column(name = "userId", length = 20) private String userId;
-    @Column(name = "password", length = 20) private String password;
+    @Column(name = "password", length = 100) private String password;
     @Column(name = "userName", length = 10) private String userName;
     @Column(name = "email", length = 30) private String email;
-    @Column(name = "refreshToken", length = 1000) private String refreshToken;
     @Column(name = "createDate") private LocalDateTime createDate;
     @Column(name = "modifyDate", nullable = false) private LocalDateTime modifyDate;
 

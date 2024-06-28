@@ -1,0 +1,9 @@
+POST {{domain}}/signUp
+Content-Type: application/json
+
+{
+  "userId": "test14",
+  "password": "1q2w3e4r!!",
+  "userName": "test14",
+  "email": "test14@test.com"
+}

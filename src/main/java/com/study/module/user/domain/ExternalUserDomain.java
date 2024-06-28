@@ -6,7 +6,6 @@ public record ExternalUserDomain(
         String userId,
         String userName,
         String email,
-        String refreshToken,
         LocalDateTime createDate,
         LocalDateTime modifyDate
 ) {
@@ -15,7 +14,6 @@ public record ExternalUserDomain(
                 userDomain.userId(),
                 userDomain.userName(),
                 userDomain.email(),
-                userDomain.refreshToken(),
                 userDomain.createDate(),
                 userDomain.modifyDate()
         );

@@ -41,22 +41,8 @@ public class UserPersistenceAdapter implements UserFindPort, UserRegisterPort, U
     }
 
     @Override
-    public UserDomain findByRefreshToken(String refreshToken) {
-        Optional<UserEntity> userEntity = userRepository.findByRefreshToken(refreshToken);
-        return userEntity.map(UserMapper.toDomain).orElse(null);
-    }
-
-    @Override
-    public void updateRefreshToekn(UserDomain userDomain, String refreshToken) {
-        UserEntity userEntity = UserMapper.toEntity(userDomain, refreshToken);
-        userRepository.save(userEntity);
-    }
-
-    @Override
-    public void removeRefreshToken(UserDomain userDomain, String refreshToken) {
-        UserEntity userEntity = UserMapper.toEntity(userDomain, refreshToken);
-        userRepository.save(userEntity);
-
-
+    public void save(UserDomain userDomain) {
+        UserEntity entity = UserMapper.toEntity(userDomain);
+        userRepository.save(entity);
     }
 }

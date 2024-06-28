@@ -2,6 +2,8 @@ package com.study.module.user.adapter.input;
 
 
 import com.study.module.user.application.port.input.UserFindQuery;
+import com.study.module.user.application.port.input.UserRegisterUseCase;
+import com.study.module.user.application.port.input.command.UserRegisterCommand;
 import com.study.module.user.domain.ExternalUserDomain;
 import com.study.module.user.domain.UserDomain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,30 +22,27 @@ import java.util.List;
 @Slf4j
 public class UserApiController {
     private final UserFindQuery userFindQuery;
+    private final UserRegisterUseCase userRegisterUseCase;
 
-    @GetMapping("/login")
-    public ModelAndView login() {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("html/login.html");
-        return mv;
+    @GetMapping("/index")
+    public String main() {
+        return "/html/main.html";
     }
 
-    @PostMapping("/login")
-    public String loginConfirm(HttpServletRequest request) throws Exception {
-        String userId = request.getParameter("userId");
-        String password = request.getParameter("password");
-        URI uri = URI.create(request.getRequestURI());
-        if(userId == null) {
-//            throw new Exception();
-        }
+    @GetMapping("/login")
+    public String login() {
+        return "/html/login.html";
+    }
 
-
-        log.info("userId : {}, password : {}", userId, password);
-        return "html/login.html";
+    @GetMapping("/signUp")
+    public String join() {
+        return "/html/join.html";
     }
 
     @PostMapping("/signUp")
-    public ResponseEntity<Void> register(HttpServletRequest request) {
+    public ResponseEntity<Void> register(HttpServletRequest request, @RequestBody UserRegisterCommand command) {
+
+        userRegisterUseCase.save(command);
         return ResponseEntity.created(URI.create(request.getRequestURI())).build();
     }
 

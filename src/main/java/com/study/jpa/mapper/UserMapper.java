@@ -15,7 +15,6 @@ public interface UserMapper {
             c.getPassword(),
             c.getUserName(),
             c.getEmail(),
-            c.getRefreshToken(),
             c.getCreateDate(),
             c.getModifyDate()
     );
@@ -27,19 +26,17 @@ public interface UserMapper {
                             d.getPassword(),
                             d.getUserName(),
                             d.getEmail(),
-                            d.getRefreshToken(),
                             d.getCreateDate(),
                             d.getModifyDate()
                     )
             ).toList();
 
-    static UserEntity toEntity(UserDomain userDomain, String refreshToken) {
+    static UserEntity toEntity(UserDomain userDomain) {
         return new UserEntity(
                 userDomain.userId(),
                 userDomain.password(),
                 userDomain.userName(),
                 userDomain.email(),
-                refreshToken,
                 ObjectUtils.ifNull(userDomain.createDate(), LocalDateTime.now()),
                 userDomain.createDate() != null ? LocalDateTime.now() : userDomain.modifyDate()
         );
