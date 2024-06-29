@@ -1,18 +1,21 @@
 package com.study.module.user.adapter.input;
 
 
+import com.study.module.user.application.port.input.MailSendUseCase;
 import com.study.module.user.application.port.input.UserFindQuery;
 import com.study.module.user.application.port.input.UserRegisterUseCase;
+import com.study.module.user.application.port.input.command.MailSendCommand;
 import com.study.module.user.application.port.input.command.UserRegisterCommand;
 import com.study.module.user.domain.ExternalUserDomain;
-import com.study.module.user.domain.UserDomain;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.net.URI;
 import java.util.List;
@@ -23,6 +26,7 @@ import java.util.List;
 public class UserApiController {
     private final UserFindQuery userFindQuery;
     private final UserRegisterUseCase userRegisterUseCase;
+    private final MailSendUseCase mailSendUseCase;
 
     @GetMapping("/index")
     public String main() {
@@ -44,6 +48,11 @@ public class UserApiController {
 
         userRegisterUseCase.save(command);
         return ResponseEntity.created(URI.create(request.getRequestURI())).build();
+    }
+
+    @PostMapping("/signUp/send-mail")
+    public String sendMail(@RequestBody MailSendCommand command) {
+        return mailSendUseCase.sendAuthCode(command.email());
     }
 
     @GetMapping("/find")

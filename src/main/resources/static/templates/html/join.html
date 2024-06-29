@@ -2,7 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>회원 가입</title>
+    <style>
+        .margin-bottom {
+            margin-bottom: 10px;
+        }
+        .margin-left {
+            margin-left: 10px;
+        }
+        .displayNone {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <!--    <form id="joinForm">-->
@@ -10,11 +21,12 @@
         <div>
             <fieldset>
                 <legend>회원가입</legend>
-                <label  title="아이디"><input id="userId" name="userId" placeholder="아이디" value="" type="text"></label>
-                <label  title="비밀번호"><input id="password" name="password" autocomplete="off" value="" type="password" placeholder="비밀번호"></label>
-                <label  title="회원명"><input id="userName" name="userName" value="" type="text" placeholder="회원명"></label>
-                <label  title="이메일"><input id="email" name="email" value="" type="text" placeholder="이메일"></label>
-                <button id="joinBtn" type="button">가입</button>
+                <div class="margin-bottom"><label  title="아이디"><input id="userId" name="userId" placeholder="아이디" value="" type="text"></label></div>
+                <div class="margin-bottom"><label  title="비밀번호"><input id="password" name="password" autocomplete="off" value="" type="password" placeholder="비밀번호"></label></div>
+                <div class="margin-bottom"><label  title="회원명"><input id="userName" name="userName" value="" type="text" placeholder="회원명"></label></div>
+                <div class="margin-bottom"><label  title="이메일"><input id="email" name="email" value="" type="text" placeholder="이메일"></label><button class="margin-left" id="emailAuthBtn">인증번호전송</button></div>
+                <div id="authCodeDiv" class="margin-bottom displayNone"><label title="이메일 인증번호"><input id="emailAuthCode" name="emailAuthCode" value="" type="text" placeholder="인증코드"/></label><button class="margin-left" id="emailAuthConfirmBtn">인증확인</button></div>
+                <div class="margin-bottom"><button id="joinBtn" type="button" disabled>가입</button></div>
                 <!--<ul>
                     <li><a href="">아이디찾기</a></li>
                     <li><a href="">비밀번호찾기</a></li>
@@ -37,14 +49,47 @@
     });
 
 
-    callAjax = (url, method, data) => {
+    callAjax = (url, method, data, callback) => {
         const ajax = new XMLHttpRequest();
         ajax.timeout = 1500;
         ajax.open(method, url);
         ajax.setRequestHeader("Content-Type", "application/json");
         ajax.send(JSON.stringify(data));
+        ajax.onreadystatechange = () => {
+            if(ajax.status === 200 || ajax.status === 201) {
+                callback(ajax);
+            }
+        }
     }
 
+    let emailAuthCode;
+    const emailAuthBtn = document.querySelector("#emailAuthBtn");
+    emailAuthBtn.addEventListener('click', () => {
+       displayNoneToBlock(document.querySelector('#authCodeDiv'));
+       const data = {
+           "email" : document.querySelector('#email').value
+       }
+       callAjax('/signUp/send-mail', 'POST', JSON.stringify(data), (ajax) => {
+           emailAuthCode = ajax.response;
+       });
+    });
+
+    const displayNoneToBlock = (element) => {
+        element.style.display = "block";
+    }
+
+    const emailConformBtn = document.querySelector('#emailAuthConfirmBtn');
+    emailConformBtn.addEventListener('click', () => {
+        const inputAuthCode = document.querySelector('#emailAuthCode');
+        if(emailAuthCode === inputAuthCode) {
+            alert("인증 성공");
+            document.querySelector("#joinBtn").disabled = false;
+            emailConformBtn.disabled = true;
+            emailAuthBtn.disabled = true;
+        } else {
+            alert("인증번호가 다릅니다. 확인 후 다시 인증해주세요.");
+        }
+    })
 
 </script>
 </html>

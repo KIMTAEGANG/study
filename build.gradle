@@ -42,6 +42,9 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     implementation 'com.auth0:java-jwt:3.13.0'
 
+    //java mail
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
     // Querydsl 추가
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
