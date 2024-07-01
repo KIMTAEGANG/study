@@ -66,7 +66,6 @@ public class UserApiControllerTest extends RestDocumentConfig {
                 "test13",
                 "test13",
                 "test13@naver.com",
-                "refreshToken",
                 LocalDateTime.now(),
                 null
         );
@@ -93,7 +92,6 @@ public class UserApiControllerTest extends RestDocumentConfig {
                                 fieldWithPath("userId").description("사용자 아이디"),
                                 fieldWithPath("userName").description("사용자 이름"),
                                 fieldWithPath("email").description("이메일"),
-                                fieldWithPath("refreshToken").description("refreshToken 값"),
                                 fieldWithPath("createDate").description("생성일자"),
                                 fieldWithPath("modifyDate").description("수정일자")
                         )
