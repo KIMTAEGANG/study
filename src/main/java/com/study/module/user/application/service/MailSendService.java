@@ -18,7 +18,7 @@ public class MailSendService implements MailSendUseCase {
     @Value("${spring.mail.username}")
     private String sender;
 
-    private JavaMailSenderImpl javaMailSender;
+    private final JavaMailSenderImpl javaMailSender;
 
     @Override
     public String sendAuthCode(String email) {
@@ -36,6 +36,7 @@ public class MailSendService implements MailSendUseCase {
             messageHelper.setTo(to);
             messageHelper.setSubject(title);
             messageHelper.setText(context, true);
+            javaMailSender.send(message);
         } catch (Exception e) {
             throw new MailSendException("mail 전송 에러");
         }

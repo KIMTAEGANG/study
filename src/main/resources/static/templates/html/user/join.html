@@ -27,11 +27,6 @@
                 <div class="margin-bottom"><label  title="이메일"><input id="email" name="email" value="" type="text" placeholder="이메일"></label><button class="margin-left" id="emailAuthBtn">인증번호전송</button></div>
                 <div id="authCodeDiv" class="margin-bottom displayNone"><label title="이메일 인증번호"><input id="emailAuthCode" name="emailAuthCode" value="" type="text" placeholder="인증코드"/></label><button class="margin-left" id="emailAuthConfirmBtn">인증확인</button></div>
                 <div class="margin-bottom"><button id="joinBtn" type="button" disabled>가입</button></div>
-                <!--<ul>
-                    <li><a href="">아이디찾기</a></li>
-                    <li><a href="">비밀번호찾기</a></li>
-                    <li><a href="">회원가입</a></li>
-                </ul>-->
             </fieldset>
         </div>
 <!--    </form>-->
@@ -50,11 +45,14 @@
 
 
     callAjax = (url, method, data, callback) => {
+        stringData = data != null ? JSON.stringify(data) : null;
         const ajax = new XMLHttpRequest();
         ajax.timeout = 1500;
         ajax.open(method, url);
-        ajax.setRequestHeader("Content-Type", "application/json");
-        ajax.send(JSON.stringify(data));
+        if(method === 'POST') {
+            ajax.setRequestHeader("Content-Type", "application/json");
+        }
+        ajax.send(stringData);
         ajax.onreadystatechange = () => {
             if(ajax.status === 200 || ajax.status === 201) {
                 callback(ajax);
@@ -69,7 +67,7 @@
        const data = {
            "email" : document.querySelector('#email').value
        }
-       callAjax('/signUp/send-mail', 'POST', JSON.stringify(data), (ajax) => {
+       callAjax('/signUp/send-mail', 'POST', data, (ajax) => {
            emailAuthCode = ajax.response;
        });
     });
@@ -80,7 +78,7 @@
 
     const emailConformBtn = document.querySelector('#emailAuthConfirmBtn');
     emailConformBtn.addEventListener('click', () => {
-        const inputAuthCode = document.querySelector('#emailAuthCode');
+        const inputAuthCode = document.querySelector('#emailAuthCode').value;
         if(emailAuthCode === inputAuthCode) {
             alert("인증 성공");
             document.querySelector("#joinBtn").disabled = false;

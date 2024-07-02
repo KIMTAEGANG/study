@@ -34,10 +34,10 @@ public class SpringSecurityConfig {
                 .csrf(csrf -> csrf
                         .csrfTokenRequestHandler(requestAttributeHandler)
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                        .ignoringRequestMatchers("/login", "/logout", "/signUp"))
+                        .ignoringRequestMatchers("/login", "/logout", "/signUp", "/api/signUp", "/api/signUp/mail-send"))
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/signUp", "/signUp/**").permitAll()
+                        .requestMatchers("/signUp", "/find/id", "/find/password", "/api/signUp", "/api/signUp/mail-send").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(login -> login
                         .loginPage("/login")

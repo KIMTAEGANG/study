@@ -1,6 +1,5 @@
 package com.study.module.user.adapter.input;
 
-
 import com.study.module.user.application.port.input.MailSendUseCase;
 import com.study.module.user.application.port.input.UserFindQuery;
 import com.study.module.user.application.port.input.UserRegisterUseCase;
@@ -9,39 +8,20 @@ import com.study.module.user.application.port.input.command.UserRegisterCommand;
 import com.study.module.user.domain.ExternalUserDomain;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
-@Slf4j
-public class UserApiController {
-    private final UserFindQuery userFindQuery;
-    private final UserRegisterUseCase userRegisterUseCase;
+@RequestMapping("/api")
+public class RestUserApiController {
+
     private final MailSendUseCase mailSendUseCase;
-
-    @GetMapping("/index")
-    public String main() {
-        return "/html/main.html";
-    }
-
-    @GetMapping("/login")
-    public String login() {
-        return "/html/login.html";
-    }
-
-    @GetMapping("/signUp")
-    public String join() {
-        return "/html/join.html";
-    }
+    private final UserRegisterUseCase userRegisterUseCase;
+    private final UserFindQuery userFindQuery;
 
     @PostMapping("/signUp")
     public ResponseEntity<Void> register(HttpServletRequest request, @RequestBody UserRegisterCommand command) {
@@ -51,8 +31,8 @@ public class UserApiController {
     }
 
     @PostMapping("/signUp/send-mail")
-    public String sendMail(@RequestBody MailSendCommand command) {
-        return mailSendUseCase.sendAuthCode(command.email());
+    public ResponseEntity<String> sendMail(@RequestBody MailSendCommand command) {
+        return ResponseEntity.ok(mailSendUseCase.sendAuthCode(command.email()));
     }
 
     @GetMapping("/find")
@@ -64,5 +44,4 @@ public class UserApiController {
     public ResponseEntity<List<String>> findUserId(@RequestParam String email) {
         return ResponseEntity.ok(userFindQuery.findUserIdByEmail(email));
     }
-
 }

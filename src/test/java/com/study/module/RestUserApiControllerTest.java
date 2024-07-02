@@ -2,10 +2,9 @@ package com.study.module;
 
 
 import com.study.RestDocumentConfig;
-import com.study.module.user.adapter.input.UserApiController;
+import com.study.module.user.adapter.input.RestUserApiController;
 import com.study.module.user.application.port.input.UserFindQuery;
 import com.study.module.user.domain.ExternalUserDomain;
-import com.study.module.user.domain.UserDomain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -27,9 +26,9 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = UserApiController.class)
+@WebMvcTest(controllers = RestUserApiController.class)
 @AutoConfigureRestDocs
-public class UserApiControllerTest extends RestDocumentConfig {
+public class RestUserApiControllerTest extends RestDocumentConfig {
 
     private static String signUp = "/api/v1/user/signUp";
     private static String findUser = "/api/v1/user/find";
