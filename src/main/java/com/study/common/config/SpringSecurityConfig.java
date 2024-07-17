@@ -34,7 +34,7 @@ public class SpringSecurityConfig {
                 .csrf(csrf -> csrf
                         .csrfTokenRequestHandler(requestAttributeHandler)
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                        .ignoringRequestMatchers("/login", "/logout", "/signUp", "/api/signUp", "/api/signUp/mail-send"))
+                        .ignoringRequestMatchers("/login", "/logout", "/signUp", "/api/signUp", "/api/signUp/mail-send", "/resources/**", "/static/**", "/css/**", "/js/**"))
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/signUp", "/find/id", "/find/password", "/api/signUp", "/api/signUp/mail-send").permitAll()
@@ -44,7 +44,7 @@ public class SpringSecurityConfig {
                         .loginProcessingUrl("/login")
                         .usernameParameter("userId")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/")
+                        .defaultSuccessUrl("/index")
                         .successHandler(loginSuccessHandler())
                         .failureHandler(loginFailureHandler())
                         .permitAll())
@@ -56,7 +56,9 @@ public class SpringSecurityConfig {
                         .authenticationSuccessHandler(loginSuccessHandler()))
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            response.sendRedirect("/login");
+                        })
                         .deleteCookies("remember-me")
                         .permitAll())
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)

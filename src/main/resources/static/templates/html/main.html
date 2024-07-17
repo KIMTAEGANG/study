@@ -3,8 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript" th:src="@{/js/Ajax.js}"></script>
+    <script type="text/javascript" th:src="@{/js/Util.js}"></script>
 </head>
 <body>
+<input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+<input type="hidden" id="_csrf_header" th:value="${_csrf.parameterName}">
 <div>테스트</div>
+<div>
+    <a th:href="@{/logout}" onclick="logout()">로그 아웃</a>
+</div>
 </body>
+<script>
+    const logout = () => {
+        const headerName = document.querySelector('#_csrf_header').content;
+        const headerVal = document.querySelector('#_csrf').content
+
+        let header = {};
+        header[headerName] = headerVal;
+
+        let url = "/login";
+        ajax.get(url, header, null, () => {
+
+        });
+    }
+</script>
 </html>

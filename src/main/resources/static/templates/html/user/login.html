@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-
+    <script type="text/javascript" th:src="@{/js/Ajax.js}"></script>
+    <script type="text/javascript" th:src="@{/js/Util.js}"></script>
     <style>
         div.wrapper {
             display: flex;
@@ -16,19 +17,16 @@
 </head>
 <body>
 <div class="wrapper">
-    <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION.message}">
-        <div class="error">
-            <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}" />
-        </div>
-    </c:if>
     <form action="/login" method="post">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <form>
+        <input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <input type="hidden" id="_csrf_header" th:value="${_csrf.parameterName}">
         <div>
             <fieldset>
                 <legend>회원로그인</legend>
                 <label  title="아이디"><input id="userId" name="userId" placeholder="아이디" value="" type="text"></label>
                 <label  title="비밀번호"><input id="password" name="password" autocomplete="off" value="" type="password" placeholder="비밀번호"></label>
-                <button type="submit">로그인</button>
+                <button type="submit" onclick="loginCheck()">로그인</button>
                 <ul>
                     <li><a href="/find/id">아이디찾기</a></li>
                     <li><a href="find/password">비밀번호찾기</a></li>
@@ -40,9 +38,33 @@
 </div>
 </body>
 <script>
-    let button = document.querySelector('button');
-    button.addEventListener('click', () => {
-        location.href = "/login/confirm";
-    })
+    // const loginCheck = () => {
+    //     const userId = document.querySelector('#userId').value;
+    //     const password = document.querySelector('#password').value;
+    //
+    //     if(StringUtils.isEmpty(userId)) {
+    //         alert("회원 아이디를 입력해주세요");
+    //     }
+    //
+    //     if(StringUtils.isEmpty(password)) {
+    //         alert("비밀번호를 입력해주세요");
+    //     }
+    //
+    //     const headerName = document.querySelector('#_csrf_header').content;
+    //     const headerVal = document.querySelector('#_csrf').content
+    //
+    //     let header = {};
+    //     header[headerName] = headerVal;
+    //
+    //     let data = {
+    //         "userId": userId,
+    //         "password": password
+    //     }
+    //     let url = "/login?userId=" + userId + "&password=" + password;
+    //
+    //     ajax.post(url, header, data, (xhr) => {
+    //         console.log("tes")
+    //     });
+    // }
 </script>
 </html>
