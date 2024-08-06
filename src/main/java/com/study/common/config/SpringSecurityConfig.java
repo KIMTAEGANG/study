@@ -37,7 +37,7 @@ public class SpringSecurityConfig {
                         .ignoringRequestMatchers("/login", "/logout", "/signUp", "/api/signUp", "/api/signUp/mail-send", "/resources/**", "/static/**", "/css/**", "/js/**"))
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/signUp", "/find/id", "/find/password", "/api/signUp", "/api/signUp/mail-send").permitAll()
+                        .requestMatchers("/signUp", "/find/id", "/find/password", "/api/signUp", "/api/signUp/mail-send", "/api/v1/qr").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(login -> login
                         .loginPage("/login")
