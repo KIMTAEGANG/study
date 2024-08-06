@@ -44,22 +44,6 @@
     });
 
 
-    callAjax = (url, method, data, callback) => {
-        stringData = data != null ? JSON.stringify(data) : null;
-        const ajax = new XMLHttpRequest();
-        ajax.timeout = 1500;
-        ajax.open(method, url);
-        if(method === 'POST') {
-            ajax.setRequestHeader("Content-Type", "application/json");
-        }
-        ajax.send(stringData);
-        ajax.onreadystatechange = () => {
-            if(ajax.status === 200 || ajax.status === 201) {
-                callback(ajax);
-            }
-        }
-    }
-
     let emailAuthCode;
     const emailAuthBtn = document.querySelector("#emailAuthBtn");
     emailAuthBtn.addEventListener('click', () => {

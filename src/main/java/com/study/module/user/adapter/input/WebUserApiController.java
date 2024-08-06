@@ -25,7 +25,7 @@ public class WebUserApiController {
         return "/html/user/login.html";
     }
 
-    @GetMapping(value="/logout")
+    @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.isAuthenticated()) {

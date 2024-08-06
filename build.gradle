@@ -38,10 +38,16 @@ dependencies {
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
     //jpa
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
     //jwt
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-    implementation 'com.auth0:java-jwt:3.13.0'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    //qr
+    implementation group: 'com.google.zxing', name: 'javase', version: '3.5.0'
+    implementation group: 'com.google.zxing', name: 'core', version: '3.5.0'
 
     //java mail
     implementation 'org.springframework.boot:spring-boot-starter-mail'
