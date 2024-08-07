@@ -1,9 +1,11 @@
 package com.study.module.user.adapter.input;
 
+import com.study.module.auth.domain.JwtToken;
 import com.study.module.user.application.port.input.MailSendUseCase;
 import com.study.module.user.application.port.input.UserFindQuery;
 import com.study.module.user.application.port.input.UserRegisterUseCase;
 import com.study.module.user.application.port.input.command.MailSendCommand;
+import com.study.module.user.application.port.input.command.UserLoginCommand;
 import com.study.module.user.application.port.input.command.UserRegisterCommand;
 import com.study.module.user.domain.ExternalUserDomain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,6 +30,15 @@ public class RestUserApiController {
 
         userRegisterUseCase.save(command);
         return ResponseEntity.created(URI.create(request.getRequestURI())).build();
+    }
+
+    @PostMapping("/signIn")
+    public ResponseEntity<JwtToken> signIn(@RequestBody UserLoginCommand command) {
+        return ResponseEntity.ok(userFindQuery.findLoginIinfo(command));
+    }
+    @PostMapping("test")
+    public String test() {
+        return "success";
     }
 
     @PostMapping("/signUp/send-mail")
