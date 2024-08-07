@@ -15,6 +15,7 @@ public interface UserMapper {
             c.getPassword(),
             c.getUserName(),
             c.getEmail(),
+            c.getRole(),
             c.getCreateDate(),
             c.getModifyDate()
     );
@@ -26,6 +27,7 @@ public interface UserMapper {
                             d.getPassword(),
                             d.getUserName(),
                             d.getEmail(),
+                            d.getRole(),
                             d.getCreateDate(),
                             d.getModifyDate()
                     )
@@ -37,6 +39,7 @@ public interface UserMapper {
                 userDomain.password(),
                 userDomain.userName(),
                 userDomain.email(),
+                userDomain.role(),
                 ObjectUtils.ifNull(userDomain.createDate(), LocalDateTime.now()),
                 userDomain.createDate() != null ? LocalDateTime.now() : userDomain.modifyDate()
         );

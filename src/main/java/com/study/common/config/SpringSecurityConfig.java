@@ -39,10 +39,11 @@ public class SpringSecurityConfig {
                 .csrf(csrf -> csrf
                         .csrfTokenRequestHandler(requestAttributeHandler)
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                        .ignoringRequestMatchers("/api/signIn","/login", "/logout", "/signUp", "/api/signUp", "/api/signUp/mail-send", "/resources/**", "/static/**", "/css/**", "/js/**"))
+                        .ignoringRequestMatchers("/api/test","/api/signIn","/login", "/logout", "/signUp", "/api/signUp", "/api/signUp/mail-send", "/resources/**", "/static/**", "/css/**", "/js/**"))
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/api/signIn","/signUp", "/find/id", "/find/password", "/api/signUp", "/api/signUp/mail-send", "/api/v1/qr").permitAll()
+                        .requestMatchers("/api/test", "/api/signIn","/signUp", "/find/id", "/find/password", "/api/signUp", "/api/signUp/mail-send", "/api/v1/qr").permitAll()
+                        .requestMatchers("/members/test").hasRole("USER")
                         .anyRequest().authenticated())
 //                .formLogin(login -> login
 //                        .loginPage("/login")

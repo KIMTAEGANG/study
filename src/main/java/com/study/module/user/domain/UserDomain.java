@@ -9,6 +9,7 @@ public record UserDomain(
         String password,
         String userName,
         String email,
+        String role,
         LocalDateTime createDate,
         LocalDateTime modifyDate
 ) {
@@ -18,6 +19,7 @@ public record UserDomain(
                 encodePassword,
                 command.userName(),
                 command.email(),
+                "USER",
                 LocalDateTime.now(),
                 null
         );

@@ -2,7 +2,6 @@ package com.study.common.provider;
 
 import com.study.common.handler.exception.LoginCheckFailException;
 import com.study.module.user.application.service.CustomUserDetailsService;
-import com.study.module.user.application.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

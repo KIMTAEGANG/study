@@ -18,6 +18,7 @@ public class UserEntity {
     @Column(name = "password", length = 100) private String password;
     @Column(name = "userName", length = 10) private String userName;
     @Column(name = "email", length = 30) private String email;
+    @Column(name = "role", length = 10) private String role;
     @Column(name = "createDate") private LocalDateTime createDate;
     @Column(name = "modifyDate", nullable = false) private LocalDateTime modifyDate;
 
